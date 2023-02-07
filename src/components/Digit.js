@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import Additional from './Additional';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Digit = ({ additionalStatus, setadditionalStatus }) => {
 
-    const hide = () => {
+    //const hide = () => {
         //setadditionalStatus(!additionalStatus);
-        let skriveni = document.getElementsByTagName('Additional');
+        //let skriveni = document.getElementsByTagName('Additional');
         //skriveni.style.visibility = 'hidden';
-    };
+    //};
 
     const [calculate, setCalc] = useState("");
     const [solution, setSolv] = useState("");
@@ -42,12 +41,19 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
             <div className="inputField">
                 <input type="number" id="input" name="input" placeholder="0" ></input>
             </div>
-            {/*<button onClick={() => setadditionalStatus(!additionalStatus)} className="hamburger"></button>*/}
-            <button className='hamburger' onClick={hide()}><FontAwesomeIcon icon={faBars} /></button>
+            
+            <button className='hamburger' onClick={() => setadditionalStatus(!additionalStatus)}><FontAwesomeIcon icon={faBars} /></button>
         
             <div className="keyboard">
 
-                <Additional/>
+            <div className={`additional ${additionalStatus ? 'show-additional' : ''}`}>
+                <button>ln</button>
+                <button id='addit-style'>log</button>
+                <button>10^x</button>
+                <button>|x|</button>
+                <button>pie</button>
+                <button>x^y</button>
+            </div>
 
                 <div className="numbers">
                     <button  onClick={() => calculation('%')}>%</button>
