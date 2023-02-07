@@ -29,7 +29,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         const digits = [];
         for(let i=1; i<10; i++) {
             digits.push(
-                <button onClick={() => ""} className='znamenka' key={i}>{i}</button>
+                <button onClick={() => document.getElementById("input").value=i} className='znamenka' key={i}>{i}</button>
                 //{/*<button onClick={() => calculate=(i.toString())} className='znamenka' key={i}>{i}</button>*/}
             )
         }
@@ -44,7 +44,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
             
             <button className='hamburger' onClick={() => setadditionalStatus(!additionalStatus)}><FontAwesomeIcon icon={faBars} /></button>
         
-            <div className="keyboard">
+            <div className={`keyboard ${additionalStatus ? 'move-simple' : ''}`}>
 
             <div className={`additional ${additionalStatus ? 'show-additional' : ''}`}>
                 <button>ln</button>
@@ -65,15 +65,6 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
                     
         	        { addNumbers() }
 
-                    {/* <button class="znamenka">7</button>
-                    <button class="znamenka">8</button>
-                    <button class="znamenka">9</button>
-                    <button class="znamenka">4</button>
-                    <button class="znamenka">5</button>
-                    <button class="znamenka">6</button>
-                    <button class="znamenka">1</button>
-                    <button class="znamenka">2</button>
-                    <button class="znamenka">3</button> */}
                     <button >neg</button>
                     <button >0</button>
                     <button >.</button>
