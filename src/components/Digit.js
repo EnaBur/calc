@@ -29,8 +29,8 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         const digits = [];
         for(let i=1; i<10; i++) {
             digits.push(
-                <button onClick={() => document.getElementById("input").value=i} className='znamenka' key={i}>{i}</button>
-                //{/*<button onClick={() => calculate=(i.toString())} className='znamenka' key={i}>{i}</button>*/}
+                <button onClick={() => document.getElementById("input").value=i} className='num' key={i}>{i}</button>
+                
             )
         }
         return digits;
