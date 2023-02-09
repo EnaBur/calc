@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faSliders, faChartPie, faSquareRootVariable } from '@fortawesome/free-solid-svg-icons';
 
 const Digit = ({ additionalStatus, setadditionalStatus }) => {
   const [inputValue, setInputValue] = useState("");
   const [solution, setSolv] = useState("");
 
-  const operators = ['+', '-', '*', '/', '=', '.', '%'];
+  const operators = ['+', '-', '*', '/', '=', '.', '%', '^'];
 
   const calculation = (input) => {
     if (solution !== '') {
@@ -31,7 +31,25 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
     } else if (input === '^2') {
         setSolv((inputValue * inputValue).toString());
         setInputValue(solution);
-    } else if (operators.includes(input)) {
+    } else if (input ==='*(-1)'){
+      setSolv((inputValue * (-1)).toString());
+      setInputValue(solution);
+    }else if (input === '10^x') {
+      const number = parseFloat(inputValue);
+      if (!isNaN(number)) {
+        setSolv(Math.pow(10, number).toString());
+        setInputValue(solution);
+      }
+    }else if (input === '^'){
+      const numbers = inputValue.split('^');
+      const number1 = parseFloat(numbers[0]);
+      const number2 = parseFloat(numbers[1]);
+
+      if (!isNaN(number1) && !isNaN(number2)) {
+        setSolv(Math.pow(number1, number2).toString());
+        setInputValue(solution);
+      }
+    }else if (operators.includes(input)) {
       if (input === '=') {
         const expression = inputValue;
             try {
@@ -120,26 +138,26 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         className="hamburger"
         onClick={() => setadditionalStatus(!additionalStatus)}
       >
-        <FontAwesomeIcon icon={faBars} />
+        <FontAwesomeIcon icon={faSliders} />
       </button>
 
       <div className={`keyboard ${additionalStatus ? 'move-simple' : ''}`}>
         <div className={`additional ${additionalStatus ? 'show-additional' : ''}`}>
           <button>ln</button>
           <button id="addit-style">log</button>
-          <button>10^x</button>
-          <button>|x|</button>
-          <button onClick={() => calculation('3.14')}>pie</button>
-          <button>x^y</button>
+          <button onClick={() => calculation('10^x')}>10^x</button>
+          <button onClick={() => calculation('|x|')}>|x|</button>
+          <button onClick={() => calculation('3.14')}><FontAwesomeIcon icon={faChartPie} /></button>
+          <button onClick={() => calculation('^')}>x^y</button>
         </div>
 
         <div className="numbers">
           <button onClick={() => calculation('%')}>%</button>
-          <button>CE</button>
-          <button>C</button>
-          <button id="addit-style">1/x</button>
-          <button onClick={() => calculation('^2')} id="addit-style">sqr</button>
-          <button onClick={() => calculation('sqrt')} id="addit-style">sqrt</button>
+          <button onClick={() => calculation('CE')}>CE</button>
+          <button onClick={() => calculation('C')}>C</button>
+          <button onClick={() => calculation('1/x')} id="addit-style">1/x</button>
+          <button onClick={() => calculation('^2')} id="addit-style">x^2</button>
+          <button onClick={() => calculation('sqrt')} id="addit-style"><FontAwesomeIcon icon={faSquareRootVariable} /></button>
 
           {addNumbers()}
 

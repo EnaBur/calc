@@ -7,7 +7,7 @@
     border-radius: 5px;
     max-height: 100%;
     height: 435px;
-    text-size: 15px;
+    font-size: 15px;
     h1{
         color: white;
     }
@@ -15,4 +15,12 @@
 
 .dataHistory {
     margin-top: 20px;
+}
+
+@media screen and (max-width: 750px) {
+    .screen {
+        margin: 15px;
+        width: 450px;
+    }
+
 }
