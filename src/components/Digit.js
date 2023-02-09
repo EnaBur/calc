@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
@@ -41,8 +41,6 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
 
       };
       
-    
-  
     const addNumbers = () => {
       const digits = [];
       for (let i = 1; i < 10; i++) {
@@ -58,6 +56,53 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
   const handleDel = () => {
     setInputValue(inputValue.slice(0, -1));
   };
+
+  const keyMap = {
+    Backspace: handleDel,
+    Enter: () => calculation("="),
+    "+": () => calculation("+"),
+    "-": () => calculation("-"),
+    "*": () => calculation("*"),
+    "/": () => calculation("/"),
+  };
+  
+  const handleKeyDown = (event) => {
+    const keyHandler = keyMap[event.key];
+    if (keyHandler) {
+      keyHandler();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const number = parseInt(event.key);
+      if (!isNaN(number)) {
+        calculation(number);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [calculation]);
+
+  useEffect(() => {
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+        };
+  }, []);
 
   return (
     <div className="calculator">
