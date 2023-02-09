@@ -3,7 +3,10 @@ import React from 'react';
 const History = () => {
     return(
         <div className="screen">
-            History
+            <h1>History</h1>
+            <div className="dataHistory">
+                
+            </div>
         </div>
     )
 }
