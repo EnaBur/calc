@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faChartPie, faSquareRootVariable } from '@fortawesome/free-solid-svg-icons';
 
-const Digit = ({ additionalStatus, setadditionalStatus }) => {
+const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => {
   const [inputValue, setInputValue] = useState('');
-  const [solution, setSolv] = useState('');
 
   const operators = ['+', '-', '*', '/', '=', '.', '%', '^'];
 

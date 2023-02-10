@@ -42,6 +42,21 @@
     max-width: fit-content;
 }
 
+.historySolution {
+    background-color: rgba(27, 31, 35, 0.15);
+    border: rgba(27, 31, 35, 0.15);
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 20px;
+    list-style: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    font-weight: bold;
+    width: max-content;
+}
+
 @media screen and (max-width: 750px) {
     .screen {
         margin: 15px;

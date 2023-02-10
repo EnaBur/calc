@@ -5,12 +5,18 @@ import History from './History';
 
 const Calc = () => {
     const [additionalStatus, setadditionalStatus] = useState(false);
+    const [solution, setSolv] = useState('');
     return(
         <div className="calc">
             <Digit 
                 additionalStatus={additionalStatus} 
-                setadditionalStatus={setadditionalStatus} />
-            <History/>
+                setadditionalStatus={setadditionalStatus}
+                solution = {solution}
+                setSolv = {setSolv}
+                 />
+            <History
+                solution = {solution}
+            />
         </div>
             
         
