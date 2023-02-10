@@ -102,8 +102,7 @@ input {
     margin-left: -6px;
 }
 
-button {
-    
+button { 
     background-color: #FAFBFC;
     border: 1px solid rgba(27, 31, 35, 0.15);
     border-radius: 6px;
@@ -113,7 +112,6 @@ button {
     //display: inline-block;
     font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-size: 14px;
-    font-weight: 500;
     line-height: 20px;
     list-style: none;
     padding: 6px 16px;
@@ -126,7 +124,7 @@ button {
     white-space: nowrap;
     word-wrap: break-word;
     width: 85px;
-    font-weight: bold
+    font-weight: bold;
   }
   
 .button:hover {

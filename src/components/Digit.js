@@ -49,7 +49,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
     }else if(input === 'ln'){
       const number = parseFloat(inputValue);
       if (!isNaN(number)) {
-        setSolv(Math.ln(number).toString());
+        setSolv(Math.log(number).toString());
         setInputValue(solution);
       }
     }else if (input === '^'){
