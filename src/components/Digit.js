@@ -3,24 +3,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faChartPie, faSquareRootVariable } from '@fortawesome/free-solid-svg-icons';
 
 const Digit = ({ additionalStatus, setadditionalStatus }) => {
-  const [inputValue, setInputValue] = useState("");
-  const [solution, setSolv] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [solution, setSolv] = useState('');
 
   const operators = ['+', '-', '*', '/', '=', '.', '%', '^'];
+
+  const handleDel = () => {
+    setInputValue(inputValue.toString().slice(0, -1));
+    setSolv('');
+  };
+
+  const handleCE = () => {
+    setInputValue('');
+  };
 
   const calculation = (input) => {
     if (solution !== '') {
         setInputValue(solution);
         setSolv('');
-    }
-
-    if (
+    } else if (
         (operators.includes(input) && inputValue === '') ||
         (operators.includes(input) && operators.includes(inputValue.slice(-1)))
     ) {
       return;
-    }
-    if (!isNaN(input) || input === '.') {
+    } else if (!isNaN(input) || input === '.') {
         setInputValue(inputValue + input);
     } else if (input === 'sqrt') {
       const number = parseFloat(inputValue);
@@ -34,25 +40,34 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
     } else if (input ==='*(-1)'){
       setSolv((inputValue * (-1)).toString());
       setInputValue(solution);
-    }else if (input === '10^x') {
+    } else if (input === '10^x') {
       const number = parseFloat(inputValue);
       if (!isNaN(number)) {
         setSolv(Math.pow(10, number).toString());
         setInputValue(solution);
       }
-    }else if(input === 'log'){
+    } else if(input === '|x|'){
+      const number = parseFloat(inputValue);
+      if (!isNaN(number) && number < 0) {
+        setSolv(number * (-1)).toString();
+        setInputValue(solution);
+      }
+      else if (!isNaN(number) && number > 0) {
+        setInputValue(number);
+      }
+    } else if(input === 'log'){
+      const number = parseFloat(inputValue);
+      if (!isNaN(number)) {
+        setSolv((Math.log(number) / Math.log(10)).toString());
+        setInputValue(solution);
+      }
+    } else if(input === 'ln'){
       const number = parseFloat(inputValue);
       if (!isNaN(number)) {
         setSolv(Math.log(number).toString());
         setInputValue(solution);
       }
-    }else if(input === 'ln'){
-      const number = parseFloat(inputValue);
-      if (!isNaN(number)) {
-        setSolv(Math.log(number).toString());
-        setInputValue(solution);
-      }
-    }else if (input === '^'){
+    } else if (input === '^'){
       const numbers = inputValue.split('^');
       const number1 = parseFloat(numbers[0]);
       const number2 = parseFloat(numbers[1]);
@@ -61,12 +76,12 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         setSolv(Math.pow(number1, number2).toString());
         setInputValue(solution);
       }
-    }else if (inputValue[0] === '0') {
+    } else if (inputValue[0] === '0') {
       //setInputValue("First number can't be 0");
       const numbers = inputValue;
       const number2 = (numbers[1]);
       setInputValue(number2 + input);
-    }else if (operators.includes(input)) {
+    } else if (operators.includes(input)) {
       if (input === '=') {
         const expression = inputValue;
             try {
@@ -79,7 +94,16 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
           } else {
             setInputValue(inputValue + input);
           }     
-    }
+    } else if (input === '1/x'){
+      const number = parseFloat(inputValue);
+      if (!isNaN(number)) {
+        setSolv((1 / number)).toString();
+        setInputValue(solution);
+      }
+    } else if (input === "CE") { 
+        handleCE();
+      }
+
     
   };
       
@@ -93,11 +117,6 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
       );
     }
     return digits;
-  };
-
-  const handleDel = () => {
-    setInputValue(inputValue.slice(0, -1));
-    setSolv('');
   };
 
   const keyMap = {
@@ -159,7 +178,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         <div className={`additional ${additionalStatus ? 'show-additional' : ''}`}>
           <button onClick={() => calculation('ln')}>ln</button>
           <button onClick={() => calculation('log')} id="addit-style">log</button>
-          <button onClick={() => calculation('10^x')}>10^x</button>
+          <button id='onX' onClick={() => calculation('10^x')}>10^x</button>
           <button onClick={() => calculation('|x|')}>|x|</button>
           <button onClick={() => calculation('3.14')}><FontAwesomeIcon icon={faChartPie} /></button>
           <button onClick={() => calculation('^')}>x^y</button>
@@ -168,7 +187,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         <div className="numbers">
           <button onClick={() => calculation('%')}>%</button>
           <button onClick={() => calculation('CE')}>CE</button>
-          <button onClick={() => calculation('C')}>C</button>
+          <button onClick={handleDel}>C</button>
           <button onClick={() => calculation('1/x')} id="addit-style">1/x</button>
           <button onClick={() => calculation('^2')} id="addit-style">x^2</button>
           <button onClick={() => calculation('sqrt')} id="addit-style"><FontAwesomeIcon icon={faSquareRootVariable} /></button>
