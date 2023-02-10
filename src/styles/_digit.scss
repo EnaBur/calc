@@ -12,6 +12,8 @@
     align-content: center;
 }
 
+//everything is ugly and bolded because fontAwesome offers Regular icons only to Pro users :(
+
 .calculator {
     width: 450px;
     max-width: min-content;
@@ -38,6 +40,7 @@
     
     button {
         margin: 0px 5px 10px 5px;
+        //font-weight: lighter;
     }
 }
 
@@ -96,7 +99,7 @@ input {
 
 
 .fa-sliders {
-    margin-left: -5px;
+    margin-left: -6px;
 }
 
 button {
@@ -123,6 +126,7 @@ button {
     white-space: nowrap;
     word-wrap: break-word;
     width: 85px;
+    font-weight: bold
   }
   
 .button:hover {
@@ -150,6 +154,7 @@ button {
 
 .num {
     background-color: #b7b8bb;
+    //font-weight: lighter;
 }
 
 #equality {

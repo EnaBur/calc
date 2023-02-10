@@ -40,6 +40,18 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         setSolv(Math.pow(10, number).toString());
         setInputValue(solution);
       }
+    }else if(input === 'log'){
+      const number = parseFloat(inputValue);
+      if (!isNaN(number)) {
+        setSolv(Math.log(number).toString());
+        setInputValue(solution);
+      }
+    }else if(input === 'ln'){
+      const number = parseFloat(inputValue);
+      if (!isNaN(number)) {
+        setSolv(Math.ln(number).toString());
+        setInputValue(solution);
+      }
     }else if (input === '^'){
       const numbers = inputValue.split('^');
       const number1 = parseFloat(numbers[0]);
@@ -49,6 +61,11 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
         setSolv(Math.pow(number1, number2).toString());
         setInputValue(solution);
       }
+    }else if (inputValue[0] === '0') {
+      //setInputValue("First number can't be 0");
+      const numbers = inputValue;
+      const number2 = (numbers[1]);
+      setInputValue(number2 + input);
     }else if (operators.includes(input)) {
       if (input === '=') {
         const expression = inputValue;
@@ -63,10 +80,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
             setInputValue(inputValue + input);
           }     
     }
-
-    if (input === "0" && inputValue === "") {
-      return;
-    }
+    
   };
       
   const addNumbers = () => {
@@ -143,8 +157,8 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
 
       <div className={`keyboard ${additionalStatus ? 'move-simple' : ''}`}>
         <div className={`additional ${additionalStatus ? 'show-additional' : ''}`}>
-          <button>ln</button>
-          <button id="addit-style">log</button>
+          <button onClick={() => calculation('ln')}>ln</button>
+          <button onClick={() => calculation('log')} id="addit-style">log</button>
           <button onClick={() => calculation('10^x')}>10^x</button>
           <button onClick={() => calculation('|x|')}>|x|</button>
           <button onClick={() => calculation('3.14')}><FontAwesomeIcon icon={faChartPie} /></button>
@@ -162,7 +176,7 @@ const Digit = ({ additionalStatus, setadditionalStatus }) => {
           {addNumbers()}
 
           <button onClick={() => calculation('*(-1)')}>neg</button>
-          <button onClick={() => setInputValue("0")}>0</button>
+          <button onClick={() => calculation("0")}>0</button>
           <button onClick={() => calculation('.')}>.</button>
         </div>
         <div className="simple">
