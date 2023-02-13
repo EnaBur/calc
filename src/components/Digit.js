@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders, faChartPie, faSquareRootVariable } from '@fortawesome/free-solid-svg-icons';
+import { faSliders, faChartPie, faSquareRootVariable, faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => {
+const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv, solutions, setSolutions }) => {
   const [inputValue, setInputValue] = useState('');
+
+  const addSolution = (solution) => {
+    //console.log(solution);
+    setSolutions([...solutions, solution]);
+  };
 
   const operators = ['+', '-', '*', '/', '=', '.', '%', '^'];
 
@@ -18,13 +23,27 @@ const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => 
 
   const calculation = (input) => {
     if (solution !== '') {
-        setInputValue(solution);
+        setInputValue(input + inputValue);
         setSolv('');
     } else if (
         (operators.includes(input) && inputValue === '') ||
         (operators.includes(input) && operators.includes(inputValue.slice(-1)))
     ) {
       return;
+    }  else if (operators.includes(input)) {
+      if (input === '=') {
+        const expression = inputValue; 
+        try {
+          setSolv(eval(expression).toString());
+          setInputValue(solution);
+          addSolution(inputValue + '=' + solution); // Add solution to solutions array
+        } catch (error) {
+          setSolv("Error");
+          setInputValue("Error");
+        }
+      } else {
+            setInputValue(inputValue + input);
+          }  
     } else if (!isNaN(input) || input === '.') {
         setInputValue(inputValue + input);
     } else if (input === 'sqrt') {
@@ -32,6 +51,7 @@ const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => 
       if (!isNaN(number)) {
         setSolv(Math.sqrt(number).toString());
         setInputValue(solution);
+
       }
     } else if (input === '^2') {
         setSolv((inputValue * inputValue).toString());
@@ -80,19 +100,6 @@ const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => 
       const numbers = inputValue;
       const number2 = (numbers[1]);
       setInputValue(number2 + input);
-    } else if (operators.includes(input)) {
-      if (input === '=') {
-        const expression = inputValue;
-            try {
-              setSolv(eval(expression).toString());
-              setInputValue(solution);
-            } catch (error) {
-              setSolv("Error");
-              setInputValue("Error");
-            }
-          } else {
-            setInputValue(inputValue + input);
-          }     
     } else if (input === '1/x'){
       const number = parseFloat(inputValue);
       if (!isNaN(number)) {
@@ -102,8 +109,6 @@ const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => 
     } else if (input === "CE") { 
         handleCE();
       }
-
-    
   };
       
   const addNumbers = () => {
@@ -198,7 +203,7 @@ const Digit = ({ additionalStatus, setadditionalStatus, solution, setSolv }) => 
           <button onClick={() => calculation('.')}>.</button>
         </div>
         <div className="simple">
-            <button onClick={handleDel}>del</button>
+            <button onClick={handleDel}><FontAwesomeIcon icon={faDeleteLeft}/></button>
             <button onClick={() => calculation('/')} id='addit-style'>/</button>
             <button onClick={() => calculation('*')}>x</button>
             <button onClick={() => calculation('-')}>-</button>
